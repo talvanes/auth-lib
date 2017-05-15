@@ -1,11 +1,13 @@
 default:
     autoload:
         '': %paths.base%/tests/bootstrap
-
-    features: $paths.base%/tests/features
+        features: $paths.base%/tests/features
 
     suites:
         default:
-            paths: [ %paths.base%/tests/feaures ]
+            paths: [ %paths.base%/tests/features ]
             contexts:
-                - AuthContext
+                - AuthContext:
+                    username: homestead
+                    password: secret
+                    dsn: mysql:host=localhost;dbname=homestead;charset=utf8
