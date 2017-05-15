@@ -20,7 +20,7 @@
       Given User typed username "talba"
         And User typed password "654321"
       When User attempts to sign in
-      Then User shuold see "Username and password given do not match"
+      Then User should see "Username and password given do not match"
 
     Scenario: Username and password match
       Given User typed username "talba"
@@ -29,6 +29,6 @@
       Then User should see "User 'Talvanes' signed in successfully"
 
     Scenario: User signs out
-      Given User "talba" signed in with password "123456"
+      Given User "talba" has signed in with password "123456"
       When User attempts to sign out
       Then User should see "User 'Talvanes' signed out successfully"

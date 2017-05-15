@@ -74,7 +74,7 @@ class AuthContext implements Context
     public function thereAreUsers(TableNode $usersTable)
     {
         // prepare PDO statement for insert query
-        $insertStmt = $this->db->prepare("INSERT INTO (username, password, name) VALUES (:username, :password, :name)");
+        $insertStmt = $this->db->prepare("INSERT INTO users (username, password, name) VALUES (:username, :password, :name)");
 
         // insert records into database
         foreach ($usersTable as $userData) {
@@ -103,41 +103,33 @@ class AuthContext implements Context
     }
 
     /**
-     * @Then User should see :arg1
+     * @Then User should see :message
      */
-    public function userShouldSee($arg1)
+    public function userShouldSee($message)
     {
         throw new PendingException();
     }
 
     /**
-     * @Given User typed username :arg1
+     * @Given User typed username :username
      */
-    public function userTypedUsername($arg1)
+    public function userTypedUsername($username)
     {
         throw new PendingException();
     }
 
     /**
-     * @Given User typed password :arg1
+     * @Given User typed password :password
      */
-    public function userTypedPassword($arg1)
+    public function userTypedPassword($password)
     {
         throw new PendingException();
     }
 
     /**
-     * @Then User shuold see :arg1
+     * @Given User :username has signed in with password :password
      */
-    public function userShuoldSee($arg1)
-    {
-        throw new PendingException();
-    }
-
-    /**
-     * @Given User :arg1 signed in with password :arg2
-     */
-    public function userSignedInWithPassword($arg1, $arg2)
+    public function userSignedInWithPassword($username, $password)
     {
         throw new PendingException();
     }
