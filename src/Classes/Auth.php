@@ -7,6 +7,15 @@ class Auth
     protected $user;
 
     /**
+     * Auth constructor.
+     *
+     * @public
+     */
+    public function __construct (User $user = null) {
+        $this->user = ($user)? $user : new User;
+    }
+
+    /**
      * Sets user's credentials (username and password) for authentication
      *
      * @param  array $credentials
@@ -20,6 +29,17 @@ class Auth
     }
 
 
+    public function login()
+    {
+        // todo:
+    }
+
+    public function logout()
+    {
+        // todo:
+    }
+
+
     public function __call($method, $arguments) {
         // does this method belong to this class? if so, just call it
         if (method_exists($this, $method)) {
@@ -27,7 +47,9 @@ class Auth
         }
 
         // otherwise call methods from the User model
-        call_user_func_array([$this->user, $method], $arguments);
+        if (method_exists($this->user, $method)) {
+            call_user_func_array([$this->user, $method], $arguments);
+        }
     }
 
 

@@ -8,6 +8,8 @@ use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 use Behat\Behat\Hook\Scope\AfterScenarioScope;
 use Assert\Assert;
 
+use AuthLib\Classes\Auth;
+
 /**
  * Defines application features from the specific context.
  */
@@ -30,6 +32,9 @@ class AuthContext implements Context
      */
     public function __construct($dsn, $username = 'root', $password = '')
     {
+        // initializing authentication
+        $this->auth = new Auth;
+
         // set up database connection
         $this->db = new PDO($dsn, $username, $password, [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
