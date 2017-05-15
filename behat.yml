@@ -1,0 +1,11 @@
+default:
+    autoload:
+        '': %paths.base%/tests/bootstrap
+
+    features: $paths.base%/tests/features
+
+    suites:
+        default:
+            paths: [ %paths.base%/tests/feaures ]
+            contexts:
+                - AuthContext
