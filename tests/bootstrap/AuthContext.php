@@ -1,12 +1,12 @@
 <?php
 
-use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
-
+use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 use Behat\Behat\Hook\Scope\AfterScenarioScope;
+use Assert\Assert;
 
 /**
  * Defines application features from the specific context.
@@ -91,7 +91,7 @@ class AuthContext implements Context
      */
     public function userTypedNoUsername()
     {
-        throw new PendingException();
+        $this->auth->setUsername(null);
     }
 
     /**
@@ -99,7 +99,7 @@ class AuthContext implements Context
      */
     public function userAttemptsToSignIn()
     {
-        throw new PendingException();
+        $this->auth->login();
     }
 
     /**
@@ -107,7 +107,8 @@ class AuthContext implements Context
      */
     public function userShouldSee($message)
     {
-        throw new PendingException();
+        $response_msg = $this->auth->getMessage();
+        Assert::that($response_msg)->same($message);
     }
 
     /**
@@ -115,7 +116,7 @@ class AuthContext implements Context
      */
     public function userTypedUsername($username)
     {
-        throw new PendingException();
+        $this->auth->setUsername($username);
     }
 
     /**
@@ -123,15 +124,18 @@ class AuthContext implements Context
      */
     public function userTypedPassword($password)
     {
-        throw new PendingException();
+        $this->auth->setPassword($password);
     }
 
     /**
-     * @Given User :username has signed in with password :password
+     * @Given User :username has signed in with password :plainPassword
      */
-    public function userSignedInWithPassword($username, $password)
+    public function userSignedInWithPassword($username, $plainPassword)
     {
-        throw new PendingException();
+        $this->auth->setCredentials([
+            'username' => $username,
+            'password' => $plainPassword,
+        ])->login();
     }
 
     /**
@@ -139,6 +143,6 @@ class AuthContext implements Context
      */
     public function userAttemptsToSignOut()
     {
-        throw new PendingException();
+        $this->auth->logout();
     }
 }
