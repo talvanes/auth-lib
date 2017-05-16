@@ -23,12 +23,14 @@ Scenario: Username and password given do not match
   When User attempts to sign in
   Then User should see "Username and password given do not match"
 
+@session
 Scenario: Username and password match
   Given User typed username "talba"
     And User typed password "123456"
   When User attempts to sign in
   Then User should see "User 'Talvanes' signed in successfully"
 
+@session
 Scenario: User signs out
   Given User "talba" has signed in with password "123456"
   When User attempts to sign out

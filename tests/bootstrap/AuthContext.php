@@ -72,6 +72,14 @@ class AuthContext implements Context
         $this->db->rollBack();
     }
 
+    /**
+     * @AfterScenario @session
+     */
+    public function cleanSession(AfterScenarioScope $scope)
+    {
+        if (isset($_SESSION['user_id'])) unset($_SESSION['user_id']);
+    }
+
 
     /**
      * @Given there are users:

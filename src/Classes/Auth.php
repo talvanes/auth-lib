@@ -79,7 +79,7 @@ final class Auth
             return false;
         }
 
-        // todo: look for user id by looking under users table on the database
+        // look for user id by looking under users table on the database
         $selectStmt = $this->db->prepare("SELECT * FROM users WHERE username = :username");
         $selectStmt->execute(['username' => $this->username]);
         $user = $selectStmt->fetch(\PDO::FETCH_OBJ);
@@ -88,6 +88,22 @@ final class Auth
             return false;
         }
 
-        // todo: more test cases...
+        // check user's password
+        $password = $this->password;
+        $passwordHash = $user->password;
+        if (password_verify($password, $user->password)) {
+            // passwords do match //
+            # set up user session #
+            $this->userId = $user->id;
+            $_SESSION['user_id'] = $this->userId;
+
+            # throw message to user #
+            $this->message = "User '{$user->name}' signed in successfully";
+            return true;
+        }
+
+        // passwords do not match //
+        $this->message = "Username and password given do not match";
+        return false;
     }
 }
