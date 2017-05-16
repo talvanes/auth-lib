@@ -10,7 +10,6 @@ final class Auth
     private $username;
     private $password;
     private $userId;
-
     private $db;
 
 
@@ -21,7 +20,8 @@ final class Auth
      * @public
      * @param \PDO $db Database connection (PDO)
      */
-    public function __construct(\PDO $db) {
+    public function __construct(\PDO $db)
+    {
         $this->db = $db;
     }
 
@@ -31,7 +31,8 @@ final class Auth
      * @param $string $username [[Description]]
      * @return $this
      */
-    public function setUsername($username) {
+    public function setUsername($username)
+    {
         $this->username = $username;
         return $this;
     }
@@ -42,7 +43,8 @@ final class Auth
      * @param string $password [[Description]]
      * @return $this
      */
-    public function setPassword($password) {
+    public function setPassword($password)
+    {
         $this->password = $password;
         return $this;
     }
@@ -53,7 +55,8 @@ final class Auth
      * @param  array $credentials
      * @return $this
      */
-    public function setCredentials(array $credentials) {
+    public function setCredentials(array $credentials)
+    {
         // username
         if (isset($credentials['username'])) {
             $this->setUsername($credentials['username']);
@@ -67,12 +70,26 @@ final class Auth
         return $this;
     }
 
+
+    /**
+     * Returns the user related to the username given
+     * @return mixed
+     */
+    public function user()
+    {
+        $selectStmt = $this->db->prepare("SELECT * FROM users WHERE username = :username");
+        $selectStmt->execute(['username' => $this->username]);
+        $user = $selectStmt->fetch(\PDO::FETCH_OBJ);
+        return $user;
+    }
+
     /**
      * This function signs user in if login succeeds, otherwise returns FALSE.
      *
      * @return boolean
      */
-    public function login() {
+    public function login()
+    {
         // if user has not supplied either username or password, deny access
         if (!isset($this->username) || !isset($this->password)) {
             $this->message = "You must type both username and password";
@@ -80,9 +97,7 @@ final class Auth
         }
 
         // look for user id by looking under users table on the database
-        $selectStmt = $this->db->prepare("SELECT * FROM users WHERE username = :username");
-        $selectStmt->execute(['username' => $this->username]);
-        $user = $selectStmt->fetch(\PDO::FETCH_OBJ);
+        $user = $this->user();
         if (!$user) {
             $this->message = "This username does not exist";
             return false;
@@ -97,7 +112,7 @@ final class Auth
             $this->userId = $user->id;
             $_SESSION['user_id'] = $this->userId;
 
-            # throw message to user #
+            # throw message to the user #
             $this->message = "User '{$user->name}' signed in successfully";
             return true;
         }
@@ -105,5 +120,33 @@ final class Auth
         // passwords do not match //
         $this->message = "Username and password given do not match";
         return false;
+    }
+
+    /**
+     * Returns TRUE if a user has signed in, otherwise returns FALSE.
+     *
+     * @return boolean
+     */
+    public function check()
+    {
+        return isset($_SESSION['user_id']);
+    }
+
+
+    /**
+     * This method signs out a user from session
+     *
+     * @return void
+     */
+    public function logout()
+    {
+        if ($this->check()) {
+            # unset session #
+            unset($_SESSION['user_id']);
+            $this->userId = null;
+
+            # and output "successful" message #
+            $this->message = "User '{$this->user()->name}' signed out successfully";
+        }
     }
 }
