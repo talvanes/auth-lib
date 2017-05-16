@@ -41,15 +41,14 @@ class Auth
 
 
     public function __call($method, $arguments) {
-        // does this method belong to this class? if so, just call it
-        if (method_exists($this, $method)) {
-            call_user_func_array([$this, $method], $arguments);
-        }
 
-        // otherwise call methods from the User model
+        // does method belong to $user property? if so, call it
         if (method_exists($this->user, $method)) {
             call_user_func_array([$this->user, $method], $arguments);
         }
+        // otherwise it belongs to this class
+        call_user_func_array([$this, $method], $arguments);
+
     }
 
 
