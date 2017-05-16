@@ -10,4 +10,4 @@ default:
                 - AuthContext:
                     username: homestead
                     password: secret
-                    dsn: mysql:host=localhost;dbname=homestead;charset=utf8
+                    dsn: mysql:host=localhost;dbname=auth_project;charset=utf8
