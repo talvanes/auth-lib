@@ -87,12 +87,13 @@ class AuthContext implements Context
     public function thereAreUsers(TableNode $usersTable)
     {
         // prepare PDO statement for insert query
-        $insertStmt = $this->db->prepare("INSERT INTO users (username, password, name) VALUES (:username, :password, :name)");
+        $insertStmt = $this->db->prepare("INSERT INTO users (username, email, password, name) VALUES (:username, :email, :password, :name)");
 
         // insert records into database
         foreach ($usersTable as $userData) {
             $insertStmt->execute([
                 'username' => $userData['username'],
+                'email' => $userData['email'],
                 'password' => password_hash($userData['password'], PASSWORD_BCRYPT),
                 'name' => $userData['name'],
             ]);
@@ -158,4 +159,32 @@ class AuthContext implements Context
     {
         $this->auth->logout();
     }
+
+    /**
+     * @Given User typed no email
+     */
+    public function userTypedNoEmail()
+    {
+        $this->auth->setEmail(null);
+    }
+
+    /**
+     * @Given User typed email :email
+     */
+    public function userTypedEmail($email)
+    {
+        $this->auth->setEmail($email);
+    }
+
+    /**
+     * @Given Email :email has signed in with password :plainPassword
+     */
+    public function emailHasSignedInWithPassword($email, $plainPassword)
+    {
+        $this->auth->setCredentials([
+            'email' => $email,
+            'password' => $plainPassword,
+        ]);
+    }
+
 }

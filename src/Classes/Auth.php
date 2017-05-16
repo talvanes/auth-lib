@@ -9,6 +9,7 @@ final class Auth
 
     private $username;
     private $password;
+    private $email;
     private $userId;
     private $db;
 
@@ -50,6 +51,18 @@ final class Auth
     }
 
     /**
+     * Sets auth email. It is another way of identifying a user.
+     *
+     * @param  string $email
+     * @return $this
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+        return $this;
+    }
+
+    /**
      * Sets auth credentials. Both username and password may be supplied at once.
      *
      * @param  array $credentials
@@ -60,6 +73,11 @@ final class Auth
         // username
         if (isset($credentials['username'])) {
             $this->setUsername($credentials['username']);
+        }
+
+        // email
+        if (isset($credentials['email'])) {
+            $this->setEmail($credentials['email']);
         }
 
         // password
