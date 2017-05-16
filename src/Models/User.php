@@ -13,7 +13,8 @@ class User
      * @param  string $username
      * @return $this
      */
-    public function setUsername($username) {
+    public function setUsername($username)
+    {
         $this->username = $username;
         return $this;
     }
@@ -24,7 +25,8 @@ class User
      * @param  string $password
      * @return $this
      */
-    public function setPassword($password) {
+    public function setPassword($password)
+    {
         $this->password = password_hash($password, PASSWORD_BCRYPT);
         return $this;
     }
@@ -35,7 +37,8 @@ class User
      * @param  string $name
      * @return $this
      */
-    public function setName($name) {
+    public function setName($name)
+    {
         $this->name = $name;
         return $this;
     }
@@ -46,7 +49,8 @@ class User
      *
      * @return string
      */
-    public function getUsername() {
+    public function getUsername()
+    {
         return $this->username;
     }
 
@@ -54,7 +58,8 @@ class User
      * Gets user's full name
      * @return string
      */
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
     }
 }
