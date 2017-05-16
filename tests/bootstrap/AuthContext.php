@@ -32,15 +32,15 @@ class AuthContext implements Context
      */
     public function __construct($dsn, $username = 'root', $password = '')
     {
-        // initializing authentication
-        $this->auth = new Auth;
-
         // set up database connection
-        $this->db = new PDO($dsn, $username, $password, [
+        $this->db = new \PDO($dsn, $username, $password, [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
             PDO::ATTR_EMULATE_PREPARES => false,
         ]);
+
+        // initializing authentication
+        $this->auth = new Auth($this->db);
     }
 
     /**

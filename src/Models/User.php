@@ -2,10 +2,10 @@
 
 class User
 {
+    protected $id;
     protected $username;
     protected $password;
     protected $name;
-    private $plain_pass;
 
     /**
      * Sets user's login
@@ -19,14 +19,13 @@ class User
     }
 
     /**
-     * Sets user's password
+     * Sets user's password. It must be plain so it is encrypted for db storage.
      *
      * @param  string $password
      * @return $this
      */
     public function setPassword($password) {
         $this->password = password_hash($password, PASSWORD_BCRYPT);
-        $this->plain_pass = $password;
         return $this;
     }
 
