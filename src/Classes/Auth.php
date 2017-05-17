@@ -1,7 +1,7 @@
-<?php namespace AuthLib\Classes;
+<?php namespace Talba\AuthLib\Classes;
 
-use AuthLib\Models\User;
-use AuthLib\Traits\HasMessages;
+use Talba\AuthLib\Models\User;
+use Talba\AuthLib\Traits\HasMessages;
 
 final class Auth
 {
@@ -95,7 +95,7 @@ final class Auth
         if (!isset($this->username) || !isset($this->password)) {
             $this->message = "You must type both username and password";
             return false;
-        }
+        }Talba\
 
         // look for user id by looking under users table on the database
         $user = $this->user();

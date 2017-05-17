@@ -8,7 +8,7 @@ use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 use Behat\Behat\Hook\Scope\AfterScenarioScope;
 use Assert\Assert;
 
-use AuthLib\Classes\Auth;
+use Talba\AuthLib\Classes\Auth;
 
 /**
  * Defines application features from the specific context.

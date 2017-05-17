@@ -10,7 +10,7 @@
 
     "autoload": {
         "psr-4": {
-            "AuthLib\\": "src/"
+            "Talba\\AuthLib\\": "src/"
         }
     }
 }

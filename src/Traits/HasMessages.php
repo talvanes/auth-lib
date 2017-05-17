@@ -1,4 +1,4 @@
-<?php namespace AuthLib\Traits;
+<?php namespace Talba\AuthLib\Traits;
 
 trait HasMessages
 {

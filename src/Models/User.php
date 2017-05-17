@@ -1,4 +1,4 @@
-<?php namespace AuthLib\Models;
+<?php namespace Talba\AuthLib\Models;
 
 class User
 {
